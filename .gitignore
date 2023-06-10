@@ -20,5 +20,5 @@ env.bak/
 venv.bak/
 
 # Misc
-files/
+/server/app/static/uploads/
 
