@@ -6,7 +6,7 @@ import os
 from app import app, APP_ROOT
 
 # Model configuration
-model = tf.keras.models.load_model( "server\\app\\cnn\\catdog.model.h5" )
+model = tf.keras.models.load_model( "neural-network\\catdog.model.h5" )
 
 img_size = 90
 classes = ["Cat","Dog"]
