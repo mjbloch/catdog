@@ -8,14 +8,13 @@ from app import app, APP_ROOT
 # Model configuration
 model = tf.keras.models.load_model( "catdog.model.h5" )
 
-img_size = 90
-classes = ["Cat","Dog"]
-
-# static_loc=os.path.join(APP_ROOT,'static/')
 
 def catdog_predict(filename):
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-    # target=os.path.join(APP_ROOT,'static\\uploads\\'+filename)
+
+    img_size = 90
+    classes = ["Cat","Dog"]
+    
     target = os.path.join(app.config['UPLOAD'], filename)
 
     raw_image = cv2.imread( target, cv2.IMREAD_GRAYSCALE )
@@ -27,8 +26,8 @@ def catdog_predict(filename):
     X = x_raw / 255.0
 
     Y = model.predict(X)
-    probs = list( Y[0] )
 
+    probs = list( Y[0] )
     max_value = max( probs )
     the_index = probs.index( max_value )
     classification = classes[ the_index ]

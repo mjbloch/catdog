@@ -28,16 +28,10 @@ def about():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     # Get the uploaded file from the request
-    # print(APP_ROOT)
-    # target = os.path.join(APP_ROOT, 'static\\uploads\\')
-    # print(target)
     if request.method == 'POST':
         file = request.files['img']
         filename = secure_filename(file.filename)
-        # file.save("".join([target, filename]))
         file.save(os.path.join(app.config['UPLOAD'], filename))
-        # img = os.path.join(app.config['UPLOAD'], filename)
-        # print("image: ", img)
         return redirect('/prediction/{}'.format(filename))
 
 
