@@ -6,7 +6,8 @@ import os
 from app import app, APP_ROOT
 
 # Model configuration
-model = tf.keras.models.load_model( "catdog.model.h5" )
+model_path =  os.path.join("server", "app", "catdog.model.h5")
+model = tf.keras.models.load_model( model_path )
 
 
 def catdog_predict(filename):

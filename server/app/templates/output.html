@@ -7,10 +7,17 @@
 	This is an image of a {{ name }}!
 </h1>
 <body>
-	<p>	Probability this is a cat: {{ prob_cat }}%<br>
-		Probability this is a dog: {{ prob_dog }}% 
-	</p>
+	<div>
+		<p>	Probability this is a cat: {{ prob_cat }}%<br>
+			Probability this is a dog: {{ prob_dog }}% 
+		</p>
+		<form>
+			<button type="submit" formaction="/predict">Try Again</button>
+		 </form>
+	</div>
 	<img src="{{ url_for('static', filename=prediction_image) }}" alt="Uploaded Image" class="image"/>
+		
+
 </body>
 
 {% endblock %}
