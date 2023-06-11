@@ -2,6 +2,11 @@
 
 {% block ourpage %}
 
-    <h1 align="center">CatDog - The Image Classifier For Your Four-Legged Friends</h1>
+    <h1 align="center">Welcome to CatDog!</h1>
+    <h2 align="center">The Image Classification Model For Your Four-Legged Friends</h2>
+
+    <p align="center">Instructions and information can be found on the About page, while the model can be accessed on the Predict page.</p>
+
+    <p align="center"><img src="{{ url_for('static', filename='catdog.jpeg') }}" alt="CatDog" class="image"/></p>
 
 {% endblock %}
