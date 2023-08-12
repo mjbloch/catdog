@@ -1,6 +1,7 @@
 from datetime import timedelta
 from flask import render_template, request
 from google.cloud import storage
+import google.auth
 import os
 from werkzeug.utils import redirect, secure_filename
 
@@ -8,15 +9,14 @@ from app import app, APP_ROOT
 from app.process import catdog_predict
 
 
-# upload_folder = os.path.join(APP_ROOT, 'static', 'uploads')
-
 # FOR LOCAL TESTING ONLY
 # credentials = "catdog-395720-fda24c2997ae.json"
 # bucket_name = "catdog-images"
 # storage_client = storage.Client.from_service_account_json(credentials, project='catdog-395720')
 
+credentials, project_id = google.auth.default()
 bucket_name = os.environ.get("BUCKET_NAME")
-storage_client = storage.Client()
+storage_client = storage.Client(credentials=credentials, project=project_id)
 
 
 @app.route('/')
@@ -52,7 +52,8 @@ def prediction(filename):
     blob = bucket.blob(filename)
     image_url = blob.generate_signed_url(
         expiration = timedelta(minutes=5),
-        method='GET'
+        method='GET',
+        access_token=credentials.token
     )
     prediction_probs, prediction_name = catdog_predict(image_url) #imported from process file
     prob_cat = round(prediction_probs[0] * 100, 2)
