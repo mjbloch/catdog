@@ -1,27 +1,31 @@
 import cv2
-import tensorflow as tf
+from google.cloud import storage
+import io
 import numpy as np
 import os
+import urllib
+import tensorflow as tf
 
 from app import app, APP_ROOT
 
 # Model configuration
-model_path =  os.path.join("server", "app", "catdog.model.h5")
+model_path = os.path.join(APP_ROOT, 'catdog.model.h5')
+# model_path =  os.path.join("app", "catdog.model.h5")
 model = tf.keras.models.load_model( model_path )
 
 
-def catdog_predict(filename):
+def catdog_predict(image_url):
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
     img_size = 90
     classes = ["Cat","Dog"]
     
-    target = os.path.join(app.config['UPLOAD'], filename)
+    resp = urllib.request.urlopen(image_url)
+    image_np = np.asarray(bytearray(resp.read()), dtype="uint8")
+    image_raw = cv2.imdecode(image_np, cv2.IMREAD_GRAYSCALE)
+    imgage_resized = cv2.resize( image_raw, (img_size, img_size) )
 
-    raw_image = cv2.imread( target, cv2.IMREAD_GRAYSCALE )
-    img_resized = cv2.resize( raw_image, (img_size, img_size) )
-
-    x_raw = np.array( img_resized ).reshape( -1, img_size, img_size, 1)
+    x_raw = np.array( imgage_resized ).reshape( -1, img_size, img_size, 1)
 
     # normalizing - 255 possible colors values in each pixel 
     X = x_raw / 255.0
