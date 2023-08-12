@@ -1,7 +1,6 @@
 from datetime import timedelta
 from flask import render_template, request
 from google.cloud import storage
-import google.auth
 import os
 from werkzeug.utils import redirect, secure_filename
 
@@ -14,9 +13,9 @@ from app.process import catdog_predict
 # bucket_name = "catdog-images"
 # storage_client = storage.Client.from_service_account_json(credentials, project='catdog-395720')
 
-credentials, project_id = google.auth.default()
 bucket_name = os.environ.get("BUCKET_NAME")
-storage_client = storage.Client(credentials=credentials, project=project_id)
+project_id = os.environ.get("PROJECT_ID")
+storage_client = storage.Client(project=project_id)
 
 
 @app.route('/')
