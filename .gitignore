@@ -22,11 +22,5 @@ ENV/
 env.bak/
 venv.bak/
 
-# Data files
-/server/app/static/uploads/*
-/neural-network/data/
-/neural-network/test_images/
-/neural-network/X.pickle
-/neural-network/Y.pickle
 
 *.json
