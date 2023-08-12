@@ -11,13 +11,12 @@ from app.process import catdog_predict
 # upload_folder = os.path.join(APP_ROOT, 'static', 'uploads')
 
 # FOR LOCAL TESTING ONLY
-credentials = "catdog-395720-fda24c2997ae.json"
-bucket_name = "catdog-images"
+# credentials = "catdog-395720-fda24c2997ae.json"
+# bucket_name = "catdog-images"
+# storage_client = storage.Client.from_service_account_json(credentials, project='catdog-395720')
 
-# bucket_name = os.environ.get("BUCKET_NAME")
-storage_client = storage.Client.from_service_account_json(credentials, project='catdog-395720')
-
-# app.config['UPLOAD'] = upload_folder
+bucket_name = os.environ.get("BUCKET_NAME")
+storage_client = storage.Client()
 
 
 @app.route('/')
