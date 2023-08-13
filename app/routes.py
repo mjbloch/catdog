@@ -9,7 +9,7 @@ from app.process import catdog_predict
 
 
 # FOR LOCAL TESTING ONLY
-# credentials = "catdog-395720-fda24c2997ae.json"
+# credentials = "catdog-395720-b940486794a0.json"
 # bucket_name = "catdog-images"
 # storage_client = storage.Client.from_service_account_json(credentials, project='catdog-395720')
 
@@ -47,12 +47,13 @@ def upload():
 
 @app.route("/prediction/<filename>", methods=['GET', 'POST'])
 def prediction(filename):
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(filename)
-    image_url = blob.generate_signed_url(
-        expiration = timedelta(minutes=5),
-        method='GET'
-    )
+    # bucket = storage_client.bucket(bucket_name)
+    # blob = bucket.blob(filename)
+    # image_url = blob.generate_signed_url(
+    #     expiration = timedelta(minutes=5),
+    #     method='GET'
+    # )
+    image_url = f"http://{bucket_name}.storage.googleapis.com/{filename}"
     prediction_probs, prediction_name = catdog_predict(image_url) #imported from process file
     prob_cat = round(prediction_probs[0] * 100, 2)
     prob_dog = round(prediction_probs[1] * 100, 2)
