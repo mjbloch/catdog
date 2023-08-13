@@ -51,8 +51,7 @@ def prediction(filename):
     blob = bucket.blob(filename)
     image_url = blob.generate_signed_url(
         expiration = timedelta(minutes=5),
-        method='GET',
-        access_token=credentials.token
+        method='GET'
     )
     prediction_probs, prediction_name = catdog_predict(image_url) #imported from process file
     prob_cat = round(prediction_probs[0] * 100, 2)
